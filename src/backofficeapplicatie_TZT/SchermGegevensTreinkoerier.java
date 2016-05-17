@@ -51,17 +51,31 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
     private JButton jbTerug;
     // }
     
-    private String melding = ""; /* Bevat de tekst die getoond moet worden op het scherm 
-    wanneer op 'wijzigingen doorvoeren' gedrukt wordt. De melding is nog leeg, aangezien er nog niks gemeld 
-    hoeft te worden. */
+    private String melding = ""; /* Bevat de tekst die getoond moet worden op het dialoogvenster
+    wanneer op 'wijzigingen doorvoeren' gedrukt wordt en alle ingevoerde gegevens voldoen. 
+    De melding is nog leeg, aangezien er nog niks gemeld hoeft te worden. */
+    private String foutmelding = ""; /* Bevat de tekst die getoond moet worden op het dialoogvenster
+    wanneer op 'wijzigingen doorvoeren' gedrukt wordt en als er minimaal een veld is waarin de invoer onjuist is. 
+    De melding is nog leeg, aangezien er nog niks gemeld hoeft te worden. */
     
-    public String zetKommaAlsNodig() { /* Checkt of een doorgevoerde wijziging 
+    private boolean fout = false;
+    
+    private String zetKommaInMeldingAlsNodig() { /* Checkt of een doorgevoerde wijziging 
     de eerste wijziging is die in de opsommming in de melding staat. Wanneer er al een andere wijziging in de melding
     staat, wordt een komma toegevoegd aan de melding-string. */
         if (melding != "") { // 
             melding += ", ";
         }
         return melding;
+    }
+    
+    private String zetKommaInFoutmeldingAlsNodig() { /* Checkt of een doorgevoerde wijziging 
+    de eerste wijziging is die in de opsommming in de melding staat. Wanneer er al een andere wijziging in de melding
+    staat, wordt een komma toegevoegd aan de melding-string. */
+        if (foutmelding != "") { // 
+            foutmelding += ", ";
+        }
+        return foutmelding;
     }
 
     public SchermGegevensTreinkoerier(Koerier koerier) {
@@ -91,6 +105,7 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
                 }
             }
         });
+        UIManager.put("OptionPane.okButtonText", "OK"); // Verandert de tekst op de OK-button weer naar OK
         
         // Setten van de afmetingen van de panels waaruit het scherm is opgebouwd {
         panelTitel.setPreferredSize(new Dimension(700, 40));
@@ -212,31 +227,264 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
                     int gelukt = statement.executeUpdate(
                         "UPDATE persoon p " + 
                         "LEFT JOIN treinkoerier t ON p.persoon_id = t.persoon_id " +
-                        "SET p.voornaam = '" + koerier.voornaam + "' " +
-                        "WHERE t.email = '" + koerier.email + "';");
+                        "SET p.voornaam = '" + koerier.getVoornaam() + "' " +
+                        "WHERE t.treinkoerier_id = '" + koerier.getTreinkoerier_id() + "';");
+                    statement.close();
                 } catch (SQLException ex) {
                     System.err.println(ex);
                 }
+                
                 jtfVoornaam.setText(koerier.getVoornaam()); // En laat de nieuwe voornaam zien in het invoerveld
                 melding += "voornaam aangepast"; // Neem in de melding op dat de voornaam aangepast is  
+                
             }
             
             // Achternaam
             if (!jtfAchternaam.getText().equals(koerier.getAchternaam()) ) { // Als er een aanpassing is gedaan aan de achternaam
+                
                 koerier.setAchternaam(jtfAchternaam.getText()); // Verander dan de achternaam naar de nieuwe input
+                
+                try {
+                    Statement statement = connection.createStatement();
+                    int gelukt = statement.executeUpdate(
+                        "UPDATE persoon p " + 
+                        "LEFT JOIN treinkoerier t ON p.persoon_id = t.persoon_id " +
+                        "SET p.achternaam = '" + koerier.getAchternaam() + "' " +
+                        "WHERE t.treinkoerier_id = '" + koerier.getTreinkoerier_id() + "';");
+                    statement.close();
+                } catch (SQLException ex) {
+                    System.err.println(ex);
+                }
+                
                 jtfAchternaam.setText(koerier.getAchternaam()); // En laat de nieuwe achternaam zien in het invoerveld
-                zetKommaAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
-                melding += "achternaam aangepast";
+                zetKommaInMeldingAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
+                melding += "achternaam aangepast"; // Neem in de melding op dat de achternaam aangepast is 
+                
             }
             
-            if (melding != "") { // Als de melding niet leeg is, zet er dan het volgende voor en achter:
-                melding = "Wijzigingen doorgevoerd: " + melding + ".";
-            } else {
-                melding = "U heeft geen wijzigingen gedaan.";
+            // Geslacht
+            if (!jtfGeslacht.getText().equals(koerier.getGeslacht()) ) { // Als er een aanpassing is gedaan aan het geslacht
+                
+                koerier.setGeslacht(jtfGeslacht.getText()); // Verander dan het geslacht naar de nieuwe input
+                
+                try {
+                    Statement statement = connection.createStatement();
+                    int gelukt = statement.executeUpdate(
+                        "UPDATE persoon p " + 
+                        "LEFT JOIN treinkoerier t ON p.persoon_id = t.persoon_id " +
+                        "SET t.geslacht = '" + koerier.getGeslacht() + "' " +
+                        "WHERE t.treinkoerier_id = '" + koerier.getTreinkoerier_id() + "';");
+                    statement.close();
+                } catch (SQLException ex) {
+                    System.err.println(ex);
+                }
+                
+                jtfGeslacht.setText(koerier.getGeslacht()); // En laat het nieuwe geslacht zien in het invoerveld
+                zetKommaInMeldingAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
+                melding += "geslacht aangepast"; // Neem in de melding op dat het geslacht aangepast is  
+                
             }
-            jlMelding.setText(melding); /* Zet de inhoud van de melding in de melding-JLabel, 
-            zodat de melding op het scherm getoond wordt. */
+            
+            // Geboortedatum
+            if (!jtfGeboortedatum.getText().equals(koerier.getGeboortedatum()) ) { // Als er een aanpassing is gedaan aan de geboortedatum
+                
+                koerier.setGeboortedatum(jtfGeboortedatum.getText()); // Verander dan de geboortedatum naar de nieuwe input 
+                
+                if (jtfGeboortedatum.getText().equals(koerier.getGeboortedatum())) { // Als de geboortedatum voldoet (dit wordt gecheckt in de setter)
+                    
+                    try {
+                        Statement statement = connection.createStatement();
+                        int gelukt = statement.executeUpdate(
+                            "UPDATE persoon p " + 
+                            "LEFT JOIN treinkoerier t ON p.persoon_id = t.persoon_id " +
+                            "SET t.gebdatum = '" + koerier.getGeboortedatum() + "' " +
+                            "WHERE t.treinkoerier_id = '" + koerier.getTreinkoerier_id() + "';");
+                        statement.close();
+                    } catch (SQLException ex) {
+                        System.err.println(ex);
+                    }
+                    
+                    zetKommaInMeldingAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
+                    melding += "geboortedatum aangepast"; // Neem in de melding op dat de geboortedatum aangepast is 
+                     
+                } else {
+                     
+                    zetKommaInFoutmeldingAlsNodig(); 
+                    foutmelding += "geboortedatum";
+                    fout = true;
+                            
+                }
+                
+                jtfGeboortedatum.setText(koerier.getGeboortedatum()); // En laat de nieuwe geboortedatum zien in het invoerveld
+
+            }
+            
+            // Straat
+            if (!jtfStraat.getText().equals(koerier.getStraat()) ) { // Als er een aanpassing is gedaan aan de straat
+                
+                koerier.setStraat(jtfStraat.getText()); // Verander dan de straat naar de nieuwe input
+                
+                try {
+                    Statement statement = connection.createStatement();
+                    int gelukt = statement.executeUpdate(
+                        "UPDATE persoon p " + 
+                        "LEFT JOIN treinkoerier t ON p.persoon_id = t.persoon_id " +
+                        "SET t.straat = '" + koerier.getStraat() + "' " +
+                        "WHERE t.treinkoerier_id = '" + koerier.getTreinkoerier_id() + "';");
+                    statement.close();
+                } catch (SQLException ex) {
+                    System.err.println(ex);
+                }
+                
+                jtfStraat.setText(koerier.getStraat()); // En laat de nieuwe straat zien in het invoerveld
+                zetKommaInMeldingAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
+                melding += "straat aangepast"; // Neem in de melding op dat de straat aangepast is  
+                
+            }
+            
+            // Huisnummer
+            if (!jtfHuisnummer.getText().equals(koerier.getHuisnummer()) ) { // Als er een aanpassing is gedaan aan het huisnummer
+                
+                koerier.setHuisnummer(jtfHuisnummer.getText()); // Verander dan het huisnummer naar de nieuwe input
+                
+                try {
+                    Statement statement = connection.createStatement();
+                    int gelukt = statement.executeUpdate(
+                        "UPDATE persoon p " + 
+                        "LEFT JOIN treinkoerier t ON p.persoon_id = t.persoon_id " +
+                        "SET t.huisnr = '" + koerier.getHuisnummer() + "' " +
+                        "WHERE t.treinkoerier_id = '" + koerier.getTreinkoerier_id() + "';");
+                    statement.close();
+                } catch (SQLException ex) {
+                    System.err.println(ex);
+                }
+                
+                jtfHuisnummer.setText(koerier.getHuisnummer()); // En laat het nieuwe huisnummer zien in het invoerveld
+                zetKommaInMeldingAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
+                melding += "huisnummer aangepast"; // Neem in de melding op dat het huisnummer aangepast is  
+                
+            }
+            
+            // Postcode
+            if (!jtfPostcode.getText().equals(koerier.getPostcode()) ) { // Als er een aanpassing is gedaan aan de postcode
+                
+                koerier.setPostcode(jtfPostcode.getText()); // Verander dan de postcode naar de nieuwe input
+                
+                if (jtfPlaats.getText().equals(koerier.getPlaats())) { // Als het e-mailadres voldoet (dit wordt gecheckt in de setter)
+                
+                    try {
+                        Statement statement = connection.createStatement();
+                        int gelukt = statement.executeUpdate(
+                            "UPDATE persoon p " + 
+                            "LEFT JOIN treinkoerier t ON p.persoon_id = t.persoon_id " +
+                            "SET t.postcode = '" + koerier.getPostcode() + "' " +
+                            "WHERE t.treinkoerier_id = '" + koerier.getTreinkoerier_id() + "';");
+                        statement.close();
+                    } catch (SQLException ex) {
+                        System.err.println(ex);
+                    }
+                    
+                    melding += "postcode aangepast"; // Neem in de melding op dat de postcode aangepast is  
+                    zetKommaInMeldingAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
+                    
+                }
+                    
+                jtfPostcode.setText(koerier.getPostcode()); // En laat de nieuwe postcode zien in het invoerveld
+            }
+            
+            // Plaats
+            if (!jtfPlaats.getText().equals(koerier.getPlaats()) ) { // Als er een aanpassing is gedaan aan de plaats
+                
+                koerier.setPlaats(jtfPlaats.getText()); // Verander dan de plaats naar de nieuwe input
+                
+                if (jtfPlaats.getText().equals(koerier.getPlaats()) && fout == false) { // Als de plaats voldoet (dit wordt gecheckt in de setter)
+                
+                    try {
+                        Statement statement = connection.createStatement();
+                        int gelukt = statement.executeUpdate(
+                            "UPDATE persoon p " + 
+                            "LEFT JOIN treinkoerier t ON p.persoon_id = t.persoon_id " +
+                            "SET t.plaats = '" + koerier.getPlaats() + "' " +
+                            "WHERE t.treinkoerier_id = '" + koerier.getTreinkoerier_id() + "';");
+                        statement.close();
+                    } catch (SQLException ex) {
+                        System.err.println(ex);
+                    }
+                
+                    zetKommaInMeldingAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
+                    melding += "plaats aangepast"; // Neem in de melding op dat de email aangepast is 
+                    
+                } else {
+                    
+                    zetKommaInFoutmeldingAlsNodig(); 
+                    foutmelding += "plaats";
+                    fout = true;
+                            
+                }
+            
+                jtfPlaats.setText(koerier.getPlaats()); // En laat de nieuwe plaats zien in het invoerveld
+                
+            }
+            
+            // E-Mailadres
+            if (!jtfEmail.getText().equals(koerier.getEmail()) ) { // Als er een aanpassing is gedaan aan de email
+                
+                koerier.setEmail(jtfEmail.getText()); // Verander dan de email naar de nieuwe input 
+                
+                if (jtfEmail.getText().equals(koerier.getEmail())) { // Als het e-mailadres voldoet (dit wordt gecheckt in de setter)
+                    
+                    try {
+                        Statement statement = connection.createStatement();
+                        int gelukt = statement.executeUpdate(
+                            "UPDATE persoon p " + 
+                            "LEFT JOIN treinkoerier t ON p.persoon_id = t.persoon_id " +
+                            "SET t.email = '" + koerier.getEmail() + "' " +
+                            "WHERE t.treinkoerier_id = '" + koerier.getTreinkoerier_id() + "';");
+                        statement.close();
+                    } catch (SQLException ex) {
+                        System.err.println(ex);
+                    }
+                    
+                    zetKommaInMeldingAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
+                    melding += "email aangepast"; // Neem in de melding op dat de email aangepast is 
+                     
+                } else {
+                     
+                    zetKommaInFoutmeldingAlsNodig(); 
+                    foutmelding += "e-mailadres";
+                    fout = true;
+                            
+                }
+                
+                jtfEmail.setText(koerier.getEmail()); // En laat de nieuwe email zien in het invoerveld
+
+            }
+            
+            
+                
+                if (melding != "") { // Als de melding niet leeg is, zet er dan het volgende voor en achter:
+                    melding = "Wijzigingen doorgevoerd: " + melding + ". ";
+                } 
+                
+                if (foutmelding != "") { // Als de foutmelding niet leeg is, zet er dan het volgende voor en achter:
+                    foutmelding = "Onjuiste invoer: " + foutmelding + ".";
+                }
+                if (melding == "" && foutmelding == "") {
+                    melding = "U heeft geen wijzigingen gedaan.";
+                }
+                
+            
+            
+                // Wanneer op het kruisje wordt geklikt wordt het volgende dialoog getoond
+                JDialog meldingen = new JDialog();
+                JOptionPane.showMessageDialog(meldingen, melding + foutmelding);
+            
+            // jlMelding.setText(melding); /* Zet de inhoud van de melding in de melding-JLabel, 
+            // zodat de melding op het scherm getoond wordt. */
+            
+            fout = false;
             melding = ""; // Maak de melding leeg, zodat deze opnieuw gevuld kan worden
+            foutmelding = "";
             
             // Databaseverbinding beëindigen
             try {
@@ -244,8 +492,7 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
             } catch (SQLException ex) {
                 System.out.println(e);
             }
-            
-                
+                  
         } else { // Als de terugknop wordt aangeklikt
             
             SchermOverzichtTreinkoeriers scherm = new SchermOverzichtTreinkoeriers();

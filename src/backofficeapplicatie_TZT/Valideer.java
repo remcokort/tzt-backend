@@ -13,8 +13,9 @@ public class Valideer {
         } catch (AddressException ex) {
             System.out.println("Het ingevoerde e-mailadres is onjuist.");
             // Acties die ondernomen moeten worden bij fout e-mailadres
+            return false;
         }
-        return false;
+        
     }
     
 }
