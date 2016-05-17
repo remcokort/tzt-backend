@@ -1,5 +1,7 @@
 package backofficeapplicatie_TZT;
 
+import java.util.Date;
+
 public class Koerier extends Persoon {
     
     // Attribuut algemeen
@@ -52,7 +54,9 @@ public class Koerier extends Persoon {
     
     public void setVoornaam(String voornaam) {
         voornaam = voornaam.substring(0, 1).toUpperCase() + voornaam.substring(1); // Hoofdletter
-        this.voornaam = voornaam;
+        if (Valideer.voornaam(voornaam)){
+           this.voornaam = voornaam; 
+        }
     }
     
     public String getAchternaam() {
@@ -61,15 +65,20 @@ public class Koerier extends Persoon {
     
     public void setAchternaam(String achternaam) {
         achternaam = achternaam.substring(0, 1).toUpperCase() + achternaam.substring(1); // Hoofdletter
+        if (Valideer.achternaam(achternaam)){
         this.achternaam = achternaam;
+        }
     }
+        
     
     public String getGeboortedatum() { // Dit moet een Date worden i.p.v. een String
         return geboortedatum;
     }
     
     public void setGeboortedatum(String geboortedatum) {
+        if (Valideer.geboortedatum(geboortedatum)){
         this.geboortedatum = geboortedatum; // Dit moet een Date worden i.p.v. een String
+        }
     }
     
     public String getStraat() {
