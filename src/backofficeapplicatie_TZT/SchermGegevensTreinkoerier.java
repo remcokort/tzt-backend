@@ -115,7 +115,7 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
         // }
         
         // panelTitel {
-        panelTitel.add(new JLabel("Gegevens Treinkoerier"));
+        panelTitel.add(new JLabel("Gegevens Treinkoerier " + koerier.getTreinkoerier_id()));
         add(panelTitel); // Toevoegen van panel het aan scherm
         // }
         

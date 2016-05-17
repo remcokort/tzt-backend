@@ -34,8 +34,6 @@ public class Main {
         }
         
         
-
-        
         Klant klant1 = new Klant("Rick", "Holterman", "rick.holterman.rh@gmail.com");
         System.out.println(klant1);
         
