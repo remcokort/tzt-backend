@@ -51,7 +51,8 @@ public class Main {
         System.out.println(koerier2);
         
         // SchermGegevensTreinkoerier s = new SchermGegevensTreinkoerier(koerier1);
-        SchermOverzichtTreinkoeriers s2 = new SchermOverzichtTreinkoeriers();
+        //SchermOverzichtTreinkoeriers s2 = new SchermOverzichtTreinkoeriers();
+        SchermHome s = new SchermHome();
         
        
     }
