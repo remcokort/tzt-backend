@@ -42,8 +42,8 @@ public class Main {
         Klant klant2 = new Klant("Rick", "Holterman", "rick.holterman.rh@gmail.com", "06-39814911", "3892021");
         System.out.println(klant2);
         
-        Koerier koerier1 = new Koerier("Rick", "Holterman", "M", "11/02/1997", "Tiendschuurstraat", "161", 
-                "8043 XZ", "Zwolle", "rick.holterman.rh@gmail.com", "06-39814911", "238908890", "IY868HJ87", "Hash");
+        Koerier koerier1 = new Koerier("T0000001","Rick", "Holterman", "M", "11/02/1997", "Tiendschuurstraat", "161", 
+                "8043 XZ", "Zwolle", "rick.holterman.rhgmail.com", "06-39814911", "238908890", "IY868HJ87", "Hash");
         // koerier1.setActief(true); 
         System.out.println(koerier1);
         
@@ -51,7 +51,8 @@ public class Main {
         System.out.println(koerier2);
         
         // SchermGegevensTreinkoerier s = new SchermGegevensTreinkoerier(koerier1);
-        SchermOverzichtTreinkoeriers s2 = new SchermOverzichtTreinkoeriers();
+        //SchermOverzichtTreinkoeriers s2 = new SchermOverzichtTreinkoeriers();
+        SchermHome s = new SchermHome();
         
        
     }

@@ -10,6 +10,7 @@ public class Koerier extends Persoon {
     Als de waarde false is, dan is de koerier een reguliere koerier. */
     
     // Attributen treinkoerier {
+    private String treinkoerier_id;
     private String geslacht;
     private String geboortedatum; // Dit moet een Date worden i.p.v. een String
     private String straat;
@@ -40,6 +41,16 @@ public class Koerier extends Persoon {
     // }
     
     // Getters en setters treinkoerier {
+
+    public String getTreinkoerier_id() {
+        return treinkoerier_id;
+    }
+
+    public void setTreinkoerier_id(String treinkoerier_id) {
+        this.treinkoerier_id = treinkoerier_id;
+    }
+    
+    
     public String getGeslacht() {
         return geslacht;
     }
@@ -177,11 +188,12 @@ public class Koerier extends Persoon {
     // }
     
     // Constructor treinkoerier
-    public Koerier(String voornaam, String achternaam, String geslacht, 
+    public Koerier(String treinkoerier_id, String voornaam, String achternaam, String geslacht, 
     String geboortedatum, String straat, String huisnummer, String postcode, 
     String plaats, String email, String telefoon, String bsn, String documentnummer,
     String password) { // "geboortedatum" Moet een Date worden i.p.v. een String
         
+        setTreinkoerier_id(treinkoerier_id);
         setVoornaam(voornaam);
         setAchternaam(achternaam);
         setGeslacht(geslacht);
@@ -217,6 +229,7 @@ public class Koerier extends Persoon {
         output = "KOERIER\n";
         if (isTreinkoerier == true) {
             output += // De volgende output wordt getoond wanneer de koerier een treinkoerier is
+                "Treinkoerier-ID: " + getTreinkoerier_id() + "\n" +
                 "Voornaam: " + getVoornaam() + "\n" +
                 "Achternaam: " + getAchternaam() + "\n" +
                 "Geslacht: " + getGeslacht() + "\n" +

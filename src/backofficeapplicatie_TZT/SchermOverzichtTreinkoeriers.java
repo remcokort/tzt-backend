@@ -127,7 +127,7 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
                     String voornaam = resultSet.getString("voornaam");
                     String achternaam = resultSet.getString("achternaam");
                     String geslacht = resultSet.getString("geslacht");
-                    String geboortedatum = resultSet.getString("voornaam"); // Later naar kijken
+                    String geboortedatum = resultSet.getString("gebdatum"); // Later naar kijken
                     String straat = resultSet.getString("straat");
                     String huisnummer = resultSet.getString("huisnr");
                     String postcode = resultSet.getString("postcode");
@@ -138,7 +138,7 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
                     String documentnummer = resultSet.getString("documentnr");
                        
                     // Aanmaken nieuw koerierobject
-                    Koerier koerier = new Koerier(voornaam, achternaam, geslacht, "00/00/0000", straat, huisnummer, 
+                    Koerier koerier = new Koerier(treinkoerier_id, voornaam, achternaam, geslacht, geboortedatum, straat, huisnummer, 
                     postcode, plaats, email, telefoon, bsn, documentnummer, "Hash");
                     
                     // Maak nieuw scherm met de gegevens van de zojuist aangemaakte koerier
