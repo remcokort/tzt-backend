@@ -1,18 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// HBO-ICT - WINDESHEIM - KBS2 - PERIODE 3/4 2016 - HAT03
+// RICK HOLTERMAN
+// REMCO KORT
+// DENNIE DE WILDE
+// ELWIN STREESTRA
+
 package backofficeapplicatie_TZT;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-/**
- *
- * @author Remco
- */
 public class SchermHome extends JFrame implements ActionListener{
     
     private JLabel jlTztNaam;
