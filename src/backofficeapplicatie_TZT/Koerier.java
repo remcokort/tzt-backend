@@ -62,7 +62,6 @@ public class Koerier extends Persoon {
     }
     
     public void setVoornaam(String voornaam) {
-        voornaam = voornaam.substring(0, 1).toUpperCase() + voornaam.substring(1); // Hoofdletter
         this.voornaam = voornaam;
     }
     
@@ -71,7 +70,6 @@ public class Koerier extends Persoon {
     }  
     
     public void setAchternaam(String achternaam) {
-        achternaam = achternaam.substring(0, 1).toUpperCase() + achternaam.substring(1); // Hoofdletter
         this.achternaam = achternaam;
     }
     
