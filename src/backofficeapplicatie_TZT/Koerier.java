@@ -56,7 +56,10 @@ public class Koerier extends Persoon {
     }
     
     public void setGeslacht(String geslacht) {
-        this.geslacht = geslacht;
+        geslacht = geslacht.substring(0,1).toUpperCase() + geslacht.substring(1);
+        if (Valideer.geslacht(geslacht)){
+            this.geslacht = geslacht;
+        }
     }
     
     public String getVoornaam() {
@@ -97,7 +100,10 @@ public class Koerier extends Persoon {
     }
     
     public void setStraat(String straat) {
-        this.straat = straat;
+        straat = straat.substring(0,1).toUpperCase() + straat.substring(1);
+        if( Valideer.straat(straat)){
+            this.straat = straat;
+        }
     }
     
     public String getHuisnummer() {
@@ -112,14 +118,19 @@ public class Koerier extends Persoon {
     }
     
     public void setPostcode(String postcode) {
+        if(Valideer.postcode(postcode)){
         this.postcode = postcode;
+        }
     }
     public String getPlaats() {
         return plaats;
     }
     
     public void setPlaats(String plaats) {
-        this.plaats = plaats;
+        //plaats = plaats.substring(0,1).toUpperCase() + plaats.substring(1);
+        if(Valideer.plaats(plaats)){
+            this.plaats = plaats;
+        }
     }
     
     public String getTelefoon() {
@@ -127,13 +138,17 @@ public class Koerier extends Persoon {
     }
     
     public void setTelefoon(String telefoon) {
-        this.telefoon = telefoon;
+        if(Valideer.telefoon(telefoon)){
+            this.telefoon = telefoon;
+        }
     }
     public String getBsn() {
         return bsn;
     }
     public void setBsn(String bsn) {
-        this.bsn = bsn;
+        if(Valideer.bsn(bsn)){
+            this.bsn = bsn;
+        }
     }
     
     public String getDocumentnummer() {
@@ -141,7 +156,9 @@ public class Koerier extends Persoon {
     }
     
     public void setDocumentnummer(String documentnummer) {
-        this.documentnummer = documentnummer;
+        if(Valideer.documentnummer(documentnummer)){
+            this.documentnummer = documentnummer;
+        }
     }
     
     public String getPassword() {
