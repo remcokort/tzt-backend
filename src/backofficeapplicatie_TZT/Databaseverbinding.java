@@ -12,11 +12,11 @@ public class Databaseverbinding {
     public static final String password = "AiRKLLIZeZ";
     public static final String connectionString = "jdbc:mysql://sql7.freemysqlhosting.net:3306/sql7115322";
     
-    public static void genereerDatabaseVerbindingError() {
+    public static void genereerDatabaseverbindingError(Koerier koerier) {
         JOptionPane.showMessageDialog(new JDialog(),
             "Er kon geen verbinding worden gemaakt met de database,\nuw wijzigingen zijn niet opgeslagen",
             "Fout!",
-            JOptionPane.WARNING_MESSAGE);
+            JOptionPane.ERROR_MESSAGE);
     }
 
 }
