@@ -49,7 +49,7 @@ public class SchermHome extends JFrame implements ActionListener{
     
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jbOverzichtTreinkoerier) {
-            SchermOverzichtTreinkoeriers sot = new SchermOverzichtTreinkoeriers();
+            SchermOverzichtTreinkoeriers sot = new SchermOverzichtTreinkoeriers("");
             
             dispose();
         }
