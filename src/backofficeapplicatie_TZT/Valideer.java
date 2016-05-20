@@ -118,31 +118,34 @@ public class Valideer {
     }
     
     public static boolean bsn(String bsn) {
-        int bsnnummer = Integer.parseInt(bsn);
-        if (bsnnummer <= 9999999 || bsnnummer > 999999999) {
+        if (!bsn.matches("[0-9]{9}")){
             return false;
-        } 
-        int sum = -1 * bsnnummer % 10;
-
-        for (int multiplier = 2; bsnnummer > 0; multiplier++) {
-            int val = (bsnnummer /= 10) % 10;
-            sum += multiplier * val;
-            return sum != 0 && sum % 11 == 0;
-        } if (sum == 11){
-              
-            bsn = Integer.toString(bsnnummer);
-            return true;  
         } else {
-            System.out.println("FOUT");
+            int bsnnummer = Integer.parseInt(bsn);
+
+            if (bsnnummer <= 9999999 || bsnnummer > 999999999) {
+                return false;
+            }
+
+            int sum = -1 * bsnnummer % 10;
+
+            for (int multiplier = 2; bsnnummer > 0; multiplier++) {
+                int val = (bsnnummer /= 10) % 10;
+                sum += multiplier * val;
+            }
+
+            return sum != 0 && sum % 11 == 0;
         }
-            return false;
-        
-    }    
+    }
+    
+    
+
+
     
 
         
     public static boolean documentnummer(String documentnummer) { // documentnummer
-        if(documentnummer.matches("[a-zA-Z][a-zA-Z ]*")){
+        if(documentnummer.matches("[A-Z]{2}[A-Z0-9]{7}")){
            return true;  // Het ingevoerde veld gebruikt alleen letters en spaties
         } else {
             System.out.println("De ingevoerde straatnaam is onjuist.");

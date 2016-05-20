@@ -101,7 +101,7 @@ public class Koerier extends Persoon {
     }
     
     public void setStraat(String straat) {
-        straat = straat.substring(0,1).toUpperCase() + straat.substring(1);
+     
         if( Valideer.straat(straat)){
             this.straat = straat;
         }
@@ -128,7 +128,7 @@ public class Koerier extends Persoon {
     }
     
     public void setPlaats(String plaats) {
-        //plaats = plaats.substring(0,1).toUpperCase() + plaats.substring(1);
+       
         if(Valideer.plaats(plaats)){
             this.plaats = plaats;
         }
