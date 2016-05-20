@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 public class Valideer {
     
     public static boolean voornaam(String voornaam) { // Valideren voornaam
-        if(voornaam.matches("[a-zA-Z]+")){
+        if(voornaam.matches("[a-zA-Z]*")){
            return true;  // Het ingevoerde veld gebruikt alleen letters
         } else {
             System.out.println("De ingevoerde voornaam is onjuist.");
@@ -30,7 +30,7 @@ public class Valideer {
     }
     
      public static boolean geslacht(String geslacht) { // Valideren achternaam
-        if(geslacht.matches("[vV]*") || geslacht.matches("[mM]")){
+        if(geslacht.matches("[vV]*") || geslacht.matches("[mM]*")){
            return true;  // Het ingevoerde veld is een m of een v
         } else {
             System.out.println("Het ingevoerde geslacht is geen geldig geslacht");
@@ -129,7 +129,9 @@ public class Valideer {
             sum += multiplier * val;
             return sum != 0 && sum % 11 == 0;
         } if (sum == 11){
-            return true;    
+              
+            bsn = Integer.toString(bsnnummer);
+            return true;  
         } else {
             System.out.println("FOUT");
         }

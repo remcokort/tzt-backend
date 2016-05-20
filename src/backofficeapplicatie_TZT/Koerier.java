@@ -56,7 +56,6 @@ public class Koerier extends Persoon {
     }
     
     public void setGeslacht(String geslacht) {
-        geslacht = geslacht.substring(0,1).toUpperCase() + geslacht.substring(1);
         if (Valideer.geslacht(geslacht)){
             this.geslacht = geslacht;
         }
@@ -67,7 +66,6 @@ public class Koerier extends Persoon {
     }
     
     public void setVoornaam(String voornaam) {
-
         if (Valideer.voornaam(voornaam)){
            this.voornaam = voornaam; 
         }
