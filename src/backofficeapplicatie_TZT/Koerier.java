@@ -67,14 +67,12 @@ public class Koerier extends Persoon {
     }
     
     public void setVoornaam(String voornaam) {
-<<<<<<< HEAD
-        voornaam = voornaam.substring(0, 1).toUpperCase() + voornaam.substring(1); // Hoofdletter
+
         if (Valideer.voornaam(voornaam)){
            this.voornaam = voornaam; 
         }
-=======
-        this.voornaam = voornaam;
->>>>>>> refs/remotes/origin/treinkoeriers
+
+        
     }
     
     public String getAchternaam() {
@@ -82,11 +80,9 @@ public class Koerier extends Persoon {
     }  
     
     public void setAchternaam(String achternaam) {
-<<<<<<< HEAD
-        achternaam = achternaam.substring(0, 1).toUpperCase() + achternaam.substring(1); // Hoofdletter
+
         if (Valideer.achternaam(achternaam)){
-=======
->>>>>>> refs/remotes/origin/treinkoeriers
+
         this.achternaam = achternaam;
         }
     }

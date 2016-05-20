@@ -116,16 +116,27 @@ public class Valideer {
         }
         return false;
     }
-        
-    public static boolean bsn(String bsn) { // valideren bsn
-        if(bsn.matches("[a-zA-Z][a-zA-Z ]*")){
-           return true;  // Het ingevoerde veld gebruikt alleen letters en spaties
+    
+    public static boolean bsn(String bsn) {
+        int bsnnummer = Integer.parseInt(bsn);
+        if (bsnnummer <= 9999999 || bsnnummer > 999999999) {
+            return false;
+        } 
+        int sum = -1 * bsnnummer % 10;
+
+        for (int multiplier = 2; bsnnummer > 0; multiplier++) {
+            int val = (bsnnummer /= 10) % 10;
+            sum += multiplier * val;
+            return sum != 0 && sum % 11 == 0;
+        } if (sum == 11){
+            return true;    
         } else {
-            System.out.println("De ingevoerde straatnaam is onjuist.");
-            
+            System.out.println("FOUT");
         }
-        return false;
-    }
+            return false;
+        
+    }    
+    
 
         
     public static boolean documentnummer(String documentnummer) { // documentnummer

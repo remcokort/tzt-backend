@@ -654,7 +654,7 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
             try {
                connection.close(); 
             } catch (SQLException ex) {
-                genereerDatabaseVerbindingError();
+            Databaseverbinding.genereerDatabaseVerbindingError();
             }
                   
         } else { // Als de terugknop wordt aangeklikt
