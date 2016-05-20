@@ -719,12 +719,10 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
             try {
                connection.close(); 
             } catch (SQLException ex) {
-<<<<<<< HEAD
-            Databaseverbinding.genereerDatabaseVerbindingError();
-=======
+
                 Databaseverbinding.genereerDatabaseverbindingError(koerier);
                 dispose();
->>>>>>> refs/remotes/origin/treinkoeriers
+
             }
             // }
             
