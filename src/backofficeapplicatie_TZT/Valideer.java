@@ -123,7 +123,7 @@ public class Valideer {
             return false;
         } 
         int sum = -1 * bsnnummer % 10;
-
+        
         for (int multiplier = 2; bsnnummer > 0; multiplier++) {
             int val = (bsnnummer /= 10) % 10;
             sum += multiplier * val;
@@ -134,7 +134,7 @@ public class Valideer {
             System.out.println("FOUT");
         }
             return false;
-        
+  
     }    
     
 
