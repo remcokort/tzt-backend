@@ -78,7 +78,7 @@ public class SchermOverzichtPakketjes extends JFrame implements ActionListener{
         //Ophalen gegevens uit de database voor overzicht pakketjes
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT pakket_id, trackingnr, gewicht"
+            ResultSet resultSet = statement.executeQuery("SELECT pakket_id, trackingnr, gewicht "
                     + "FROM pakket");
             
             //Verwerken van de uit de database opgehaalde gegevens
