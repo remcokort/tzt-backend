@@ -2,7 +2,7 @@
 // RICK HOLTERMAN
 // REMCO KORT
 // DENNIE DE WILDE
-// ELWIN STREESTRA
+// ELWIN STREEkSTRA
 
 package backofficeapplicatie_TZT;
 
@@ -24,6 +24,7 @@ public class SchermOverzichtPakketjes extends JFrame implements ActionListener{
     private JLabel jlPakketTitel;
     private JLabel jlPakketTitel2;
     private JButton jbPakketNieuw;
+    private JButton jbPakketStat;
     
     //Arraylists voor het ophalen van de gegevens uit de database
     ArrayList detailsButtons = new ArrayList();
@@ -69,9 +70,10 @@ public class SchermOverzichtPakketjes extends JFrame implements ActionListener{
         add(jbPakketNieuw);
         jbPakketNieuw.addActionListener(this);
         
-        //Opvullen van de regel in de gridlayout
-        add(new JLabel(""));
-        add(new JLabel(""));
+         //Knop voor het bekijken van de statistieken
+        jbPakketStat = new JButton("Statistiek");
+        add(jbPakketStat);
+        jbPakketStat.addActionListener(this);
         
         //Ophalen gegevens uit de database voor overzicht pakketjes
         try {
