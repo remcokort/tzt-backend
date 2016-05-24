@@ -536,13 +536,24 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
                                 "SET t.email = '" + koerier.getEmail() + "' " +
                                 "WHERE t.treinkoerier_id = '" + koerier.getTreinkoerier_id() + "';");
                             statement.close();
+                            zetKommaInMeldingAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
+                            melding += "e-mail aangepast"; // Neem in de melding op dat het e-mailadres aangepast is 
                         } catch (SQLException ex) {
-                            Databaseverbinding.genereerDatabaseverbindingError(koerier);
-                            dispose();
+                            
+                                koerier.setEmail(emailOud);
+                                SchermGegevensTreinkoerier scherm = new SchermGegevensTreinkoerier(koerier);
+                                
+                                System.out.println(emailOud);
+                                dispose();
+                                
+                                JOptionPane.showMessageDialog(new JDialog(),
+                                "Het ingevoerde e-mailadres is al in gebruik.",
+                                "Fout!",
+                                JOptionPane.ERROR_MESSAGE);
+                                
                         }
 
-                        zetKommaInMeldingAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
-                        melding += "e-mail aangepast"; // Neem in de melding op dat het e-mailadres aangepast is 
+                        
 
                     } else {
 
