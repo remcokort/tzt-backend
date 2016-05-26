@@ -110,12 +110,11 @@ public class Valideer {
     public static boolean telefoon(String telefoon) { // valideren telefoonnummer
         if(telefoon.matches("(06-[0-9]{8})*")){
            return true;  // Het ingevoerde veld gebruikt alleen letters en spaties
-<<<<<<< HEAD
+
         } else {
             System.out.println("Het ingevoerde telefoonnummer is onjuist.");
             
-=======
->>>>>>> 3cdd9086ab2a564f0953c62ce9c558b493deca8d
+
         }
         return false;
     }
