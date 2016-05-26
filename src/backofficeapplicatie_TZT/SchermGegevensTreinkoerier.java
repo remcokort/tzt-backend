@@ -51,6 +51,7 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
     private JButton jbTerug;
     // }
     
+    private int tab; // Hierin wordt de index van het tabblad in het treinkoeriersoverzichtscherm van waaruit dit scherm geopend is, opgeslagen 
     private String melding = ""; /* Bevat de tekst die getoond moet worden op het dialoogvenster
     wanneer op 'wijzigingen doorvoeren' gedrukt wordt en alle ingevoerde gegevens voldoen. 
     De melding is nog leeg, aangezien er nog niks gemeld hoeft te worden. */
@@ -70,6 +71,10 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
     private String telefoonOud;
     private String bsnOud;
     private String documentnummerOud;
+    
+    public void setTab(int tab) {
+        this.tab = tab;
+    }
     
     private String zetKommaInMeldingAlsNodig() { /* Checkt of een doorgevoerde wijziging 
     de eerste wijziging is die in de opsommming in de melding staat. Wanneer er al een andere wijziging in de melding
@@ -502,13 +507,25 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
                                 "SET t.plaats = '" + koerier.getPlaats() + "' " +
                                 "WHERE t.treinkoerier_id = '" + koerier.getTreinkoerier_id() + "';");
                             statement.close();
+                            zetKommaInMeldingAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
+                            melding += "plaats aangepast"; // Neem in de melding op dat de plaats aangepast is 
                         } catch (SQLException ex) {
-                            Databaseverbinding.genereerDatabaseverbindingError(koerier);
-                            dispose();
+                                                        
+                                koerier.setEmail(emailOud);
+                                SchermGegevensTreinkoerier scherm = new SchermGegevensTreinkoerier(koerier);
+                                
+                                System.out.println(emailOud);
+                                dispose();
+                                
+                                JOptionPane.showMessageDialog(new JDialog(),
+                                "Het ingevoerde e-mailadres is al in gebruik.",
+                                "Fout!",
+                                JOptionPane.ERROR_MESSAGE);
+                                
                         }
+                        
 
-                        zetKommaInMeldingAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
-                        melding += "plaats aangepast"; // Neem in de melding op dat de plaats aangepast is 
+                        
 
                     } else {
 
@@ -533,7 +550,7 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
                             int gelukt = statement.executeUpdate(
                                 "UPDATE persoon p " + 
                                 "LEFT JOIN treinkoerier t ON p.persoon_id = t.persoon_id " +
-                                "SET t.email = '" + koerier.getEmail() + "' " +
+                                "SET t.email = '" + koerier.getEmail() + "', p.email = '" + koerier.getEmail() + "' " +
                                 "WHERE t.treinkoerier_id = '" + koerier.getTreinkoerier_id() + "';");
                             statement.close();
                             zetKommaInMeldingAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
@@ -711,7 +728,6 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
                 "Fout!",
                 JOptionPane.ERROR_MESSAGE);
                 
-                
             }
 
             if (melding != "") { // Als de melding niet leeg is, zet er dan het volgende voor en achter:
@@ -762,7 +778,8 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
        
         } else { // Als de terugknop wordt aangeklikt
             
-            SchermOverzichtTreinkoeriers scherm = new SchermOverzichtTreinkoeriers("");
+            SchermOverzichtTreinkoeriers sot = new SchermOverzichtTreinkoeriers("");
+            sot.tabblad.setSelectedIndex(tab);
             dispose(); // Sluit dit scherm dan
             
         }

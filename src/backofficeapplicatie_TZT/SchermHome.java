@@ -50,15 +50,14 @@ public class SchermHome extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jbOverzichtTreinkoerier) {
             SchermOverzichtTreinkoeriers sot = new SchermOverzichtTreinkoeriers("");
-            
-            dispose();
+ 
         }
         
         if (e.getSource() == jbOverzichtPakket) {
-            SchermOverzichtPakketjes sop = new SchermOverzichtPakketjes();
-            
-            dispose();
+            SchermOverzichtPakketten sop = new SchermOverzichtPakketten("");
+
         }
+        dispose();
     }
     
 }
