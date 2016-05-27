@@ -120,6 +120,7 @@ public class Valideer {
     public static boolean bsn(String bsn) {
         if (!bsn.matches("[0-9]{9}")){
             return false;
+<<<<<<< HEAD
         } else {
             int bsnnummer = Integer.parseInt(bsn);
 
@@ -134,13 +135,27 @@ public class Valideer {
                 sum += multiplier * val;
             }
 
+=======
+        } 
+        int sum = -1 * bsnnummer % 10;
+        
+        for (int multiplier = 2; bsnnummer > 0; multiplier++) {
+            int val = (bsnnummer /= 10) % 10;
+            sum += multiplier * val;
+>>>>>>> refs/remotes/origin/treinkoeriers
             return sum != 0 && sum % 11 == 0;
         }
+<<<<<<< HEAD
     }
     
     
 
 
+=======
+            return false;
+  
+    }    
+>>>>>>> refs/remotes/origin/treinkoeriers
     
 
         

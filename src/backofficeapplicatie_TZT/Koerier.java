@@ -101,7 +101,10 @@ public class Koerier extends Persoon {
     }
     
     public void setStraat(String straat) {
+<<<<<<< HEAD
      
+=======
+>>>>>>> refs/remotes/origin/treinkoeriers
         if( Valideer.straat(straat)){
             this.straat = straat;
         }
@@ -146,6 +149,7 @@ public class Koerier extends Persoon {
     public String getBsn() {
         return bsn;
     }
+    
     public void setBsn(String bsn) {
         if(Valideer.bsn(bsn)){
             this.bsn = bsn;
@@ -222,7 +226,7 @@ public class Koerier extends Persoon {
         setPlaats(plaats);
         setEmail(email);
         setTelefoon(telefoon);
-        setBsn(bsn);
+//        setBsn(bsn);
         setDocumentnummer(documentnummer);
         setPassword(password);
         setSalt(""); // Wat is hier het plan?
