@@ -113,7 +113,6 @@ public class Valideer {
 
         } else {
             System.out.println("Het ingevoerde telefoonnummer is onjuist.");
-            
         }
         return false;
     }
