@@ -4,6 +4,7 @@ import static backofficeapplicatie_TZT.Databaseverbinding.connectionString;
 import static backofficeapplicatie_TZT.Databaseverbinding.password;
 import static backofficeapplicatie_TZT.Databaseverbinding.username;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -15,12 +16,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
@@ -28,9 +32,11 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
     
     private Koerier koerier;
     
+    private Font font = new Font("Roboto", Font.PLAIN, 12);
+    
     // Het scherm is opgebouwd uit de volgende vier JPanels {
     JPanel panelTitel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15));
-    JPanel panelGegevensTreinkoerier = new JPanel(new GridLayout(13, 2));
+    JPanel panelGegevensTreinkoerier = new JPanel(new GridLayout(15, 2));
     JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.LEFT));
     // }
     
@@ -47,6 +53,8 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
     private JTextField jtfTelefoon;
     private JTextField jtfBsn;
     private JTextField jtfDocumentnummer;
+    private JRadioButton jrbStatusActief;
+    private JRadioButton jrbStatusNonactief;
     private JButton jbWijzigingenDoorvoeren;
     private JButton jbTerug;
     // }
@@ -58,6 +66,8 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
     private String foutmelding = ""; /* Bevat de tekst die getoond moet worden op het dialoogvenster
     wanneer op 'wijzigingen doorvoeren' gedrukt wordt en als er minimaal een veld is waarin de invoer onjuist is. 
     De melding is nog leeg, aangezien er nog niks gemeld hoeft te worden. */
+    
+    private boolean active;
     
     private String voornaamOud;
     private String achternaamOud;
@@ -138,7 +148,9 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
         
         // panelGegevensTreinkoerier {
         panelGegevensTreinkoerier.add(new JLabel("Treinkoerier-ID:"));
-        panelGegevensTreinkoerier.add(new JLabel(koerier.getTreinkoerier_id()));
+        JLabel jlGetTreinkoerier_id = new JLabel(koerier.getTreinkoerier_id());
+        jlGetTreinkoerier_id.setFont(font);
+        panelGegevensTreinkoerier.add(jlGetTreinkoerier_id);
         
         panelGegevensTreinkoerier.add(new JLabel("Voornaam:"));
         jtfVoornaam = new JTextField(10);
@@ -199,6 +211,28 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
         jtfDocumentnummer = new JTextField(10);
         jtfDocumentnummer.setText(koerier.getDocumentnummer());
         panelGegevensTreinkoerier.add(jtfDocumentnummer);
+        
+        ButtonGroup radioButtons = new ButtonGroup(); // Bevat de volgende twee radio-buttons
+        
+        panelGegevensTreinkoerier.add(new JLabel("Status:"));
+        jrbStatusActief = new JRadioButton();
+        jrbStatusActief.setText("Actief");
+        if (koerier.getActief() == 1) {
+            jrbStatusActief.setSelected(true);
+            active = true;
+        }
+        radioButtons.add(jrbStatusActief);
+        panelGegevensTreinkoerier.add(jrbStatusActief);
+        
+        panelGegevensTreinkoerier.add(new JLabel(""));
+        jrbStatusNonactief = new JRadioButton();
+        jrbStatusNonactief.setText("Non-actief");
+        if (koerier.getActief() == 0 || koerier.getActief() == 2) {
+            jrbStatusNonactief.setSelected(true);
+            active = false;
+        }
+        radioButtons.add(jrbStatusNonactief);
+        panelGegevensTreinkoerier.add(jrbStatusNonactief);
         
         add(panelGegevensTreinkoerier); // Toevoegen van panel het aan scherm
         
@@ -523,9 +557,6 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
                                 JOptionPane.ERROR_MESSAGE);
                                 
                         }
-                        
-
-                        
 
                     } else {
 
@@ -569,8 +600,6 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
                                 JOptionPane.ERROR_MESSAGE);
                                 
                         }
-
-                        
 
                     } else {
 
@@ -682,6 +711,35 @@ public class SchermGegevensTreinkoerier extends JFrame implements ActionListener
                     }
 
                     jtfDocumentnummer.setText(koerier.getDocumentnummer()); // En laat het nieuwe documentnummer zien in het invoerveld
+
+                }
+                
+                // Documentnummer
+                if ((!jrbStatusActief.isSelected() && koerier.getActief() == 1) || (!jrbStatusNonactief.isSelected() && (koerier.getActief() == 0 || koerier.getActief() == 2))) { // Als er een aanpassing is gedaan aan het documentnummer
+                    System.out.println(koerier.getActief());
+                    if (jrbStatusActief.isSelected()) {
+                        koerier.setActief(1); // Verander dan het documentnummer naar de nieuwe input 
+                    }
+                    
+                    if (jrbStatusNonactief.isSelected()) {
+                        koerier.setActief(2); // Verander dan het documentnummer naar de nieuwe input 
+                    }
+                    System.out.println(koerier.getActief());
+                    try {
+                        Statement statement = connection.createStatement();
+                        int gelukt = statement.executeUpdate(
+                            "UPDATE persoon p " + 
+                            "LEFT JOIN treinkoerier t ON p.persoon_id = t.persoon_id " +
+                            "SET t.actief = '" + koerier.getActief() + "' " +
+                            "WHERE t.treinkoerier_id = '" + koerier.getTreinkoerier_id() + "';");
+                        statement.close();
+                    } catch (SQLException ex) {
+                        Databaseverbinding.genereerDatabaseverbindingError(koerier);
+                        dispose();
+                    }
+
+                    zetKommaInMeldingAlsNodig(); // Voegt een komma toe aan de melding-string als dit nodig is
+                    melding += "status aangepast"; // Neem in de melding op dat het documentnummer aangepast is 
 
                 }
             

@@ -12,6 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.ArrayList;
+import static javafx.scene.text.Font.font;
+import static javafx.scene.text.Font.font;
+import static javafx.scene.text.Font.font;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -21,39 +25,42 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListener {
     
     private Koerier koerier;
     
+    private Font font = new Font("Roboto", Font.PLAIN, 12);
+    
     // Het scherm is opgebouwd uit de volgende panels {
     JTabbedPane tabblad = new JTabbedPane(); // Om de verschillende tabbladen in weer te geven
     
     // Panels tabblad 1 {
     JPanel panelTitel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15));
-    JPanel panelFilter = new JPanel(new GridLayout(1, 3));
-    JPanel panelGeenResultaten = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 18));
+    JPanel panelFilter = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+    JPanel panelGeenResultaten = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 18));
     JPanel panelOverzichtTreinkoeriers = new JPanel(); // Layout is variabel en wordt later geset
-    JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+    JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 15));
     JScrollPane scrollPanePanelOverzichtTreinkoeriers = new JScrollPane();
     // }
     
     // Panels tabblad 2
     JPanel panelTitel2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15));
-    JPanel panelFilter2 = new JPanel(new GridLayout(1, 3));
-    JPanel panelGeenResultaten2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 18));
+    JPanel panelFilter2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+    JPanel panelGeenResultaten2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 18));
     JPanel panelOverzichtTreinkoeriers2 = new JPanel(); // Layout is variabel en wordt later geset
-    JPanel panelButtons2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+    JPanel panelButtons2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 15));
     JScrollPane scrollPanePanelOverzichtTreinkoeriers2 = new JScrollPane();
     // } 
     
     // Panels tabblad 3
     JPanel panelTitel3 = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 15));
-    JPanel panelFilter3 = new JPanel(new GridLayout(1, 3));
-    JPanel panelGeenResultaten3 = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 18));
+    JPanel panelFilter3 = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+    JPanel panelGeenResultaten3 = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 18));
     JPanel panelOverzichtTreinkoeriers3 = new JPanel(); // Layout is variabel en wordt later geset
-    JPanel panelButtons3 = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+    JPanel panelButtons3 = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 15));
     JScrollPane scrollPanePanelOverzichtTreinkoeriers3 = new JScrollPane();
     // } 
     // } Einde panels
@@ -153,7 +160,7 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
         // Instellingen scherm {
         setTitle("Overzicht treinkoeriers");
         setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        setSize(740, 580);
+        setSize(730, 600);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         // }
         
@@ -175,26 +182,28 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
         });
         UIManager.put("OptionPane.okButtonText", "OK"); // Verandert de tekst op de OK-button weer naar OK
         
+        tabblad.setPreferredSize(new Dimension(718, 600));
+        
         // Setten van instellingen van de panels waaruit het scherm is opgebouwd {
         // Tabblad 1 {
         panelTitel.setPreferredSize(new Dimension(700, 90));
-        panelFilter.setPreferredSize(new Dimension(680, 40));
+        panelFilter.setPreferredSize(new Dimension(680, 55));
         panelOverzichtTreinkoeriers.setLayout(new GridLayout(rows, 4)); // Afmetingen worden later gezet, want zijn variabel
-        panelButtons.setPreferredSize(new Dimension(700, 40));
+        panelButtons.setPreferredSize(new Dimension(680, 64));
         // }
         
         // Tabblad 2 {
         panelTitel2.setPreferredSize(new Dimension(700, 90));
-        panelFilter2.setPreferredSize(new Dimension(680, 40));
+        panelFilter2.setPreferredSize(new Dimension(680, 55));
         panelOverzichtTreinkoeriers2.setLayout(new GridLayout(rows, 4)); // Afmetingen worden later gezet, want zijn variabel
-        panelButtons2.setPreferredSize(new Dimension(700, 40));
+        panelButtons2.setPreferredSize(new Dimension(680, 64));
         // }
         
         // Tabblad 3 {
         panelTitel3.setPreferredSize(new Dimension(700, 90));
-        panelFilter3.setPreferredSize(new Dimension(680, 40));
+        panelFilter3.setPreferredSize(new Dimension(680, 55));
         panelOverzichtTreinkoeriers3.setLayout(new GridLayout(rows, 4)); // Afmetingen worden later gezet, want zijn variabel
-        panelButtons3.setPreferredSize(new Dimension(700, 40));
+        panelButtons3.setPreferredSize(new Dimension(680, 64));
         // }
         // } Einde instellingen pannels
 
@@ -204,6 +213,7 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
         titel.setForeground(new Color(237, 127, 35));
         titel.setFont(new Font("Roboto", Font.PLAIN, 50));
         panelTitel.add(titel);
+        panelTitel.setBackground(Color.WHITE);
         add(panelTitel); // Toevoegen van panel het aan scherm
         // }
         
@@ -212,6 +222,7 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
         titel2.setForeground(new Color(237, 127, 35));
         titel2.setFont(new Font("Roboto", Font.PLAIN, 50));
         panelTitel2.add(titel2);
+        panelTitel2.setBackground(Color.WHITE);
         add(panelTitel2); // Toevoegen van panel het aan scherm
         // }
         
@@ -220,46 +231,95 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
         titel3.setForeground(new Color(237, 127, 35));
         titel3.setFont(new Font("Roboto", Font.PLAIN, 50));
         panelTitel3.add(titel3);
+        panelTitel3.setBackground(Color.WHITE);
         add(panelTitel3); // Toevoegen van panel het aan scherm
         // }        
         // } Einde panelTitel
         
         // panelFilter {
         // Tabblad 1 {
-        panelFilter.add(new JLabel("Zoeken op achternaam:"));
+        JLabel jlZoeken = new JLabel("Zoeken op achternaam:");
+        jlZoeken.setPreferredSize(new Dimension(332, 40));
+        jlZoeken.setLayout(new FlowLayout(FlowLayout.LEFT));
         
-        jtfAchternaam = new JTextField(10);
+        panelFilter.add(jlZoeken);
+        
+        jtfAchternaam = new JTextField();
+        jtfAchternaam.setBorder(null);
+        jtfAchternaam.setBackground(Color.LIGHT_GRAY);
+        jtfAchternaam.setPreferredSize(new Dimension(174, 48));
+        jtfAchternaam.setBorder(BorderFactory.createMatteBorder(0, 8, 0, 0, Color.LIGHT_GRAY));
         panelFilter.add(jtfAchternaam);
         
         jbZoeken = new JButton("Zoeken");
+        jbZoeken.setForeground(Color.WHITE);
+        jbZoeken.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        jbZoeken.setBackground(new Color(237, 127, 35));
+        jbZoeken.setPreferredSize(new Dimension(173, 48));
+        jbZoeken.setBorder(BorderFactory.createMatteBorder(0, 5, 0, 0, Color.WHITE));
         panelFilter.add(jbZoeken);
         jbZoeken.addActionListener(this);
+        
+        panelFilter.setBackground(Color.WHITE);
+        panelFilter.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
         
         add(panelFilter); // Toevoegen van panel het aan scherm
         // }
         
         // Tabblad 2 {        
-        panelFilter2.add(new JLabel("Zoeken op achternaam:"));
+        JLabel jlZoeken2 = new JLabel("Zoeken op achternaam:");
+        jlZoeken2.setPreferredSize(new Dimension(332, 40));
+        jlZoeken2.setLayout(new FlowLayout(FlowLayout.LEFT));
         
-        jtfAchternaam2 = new JTextField(10);
+        panelFilter2.add(jlZoeken2);
+        
+        jtfAchternaam2 = new JTextField();
+        jtfAchternaam2.setBorder(null);
+        jtfAchternaam2.setBackground(Color.LIGHT_GRAY);
+        jtfAchternaam2.setPreferredSize(new Dimension(174, 48));
+        jtfAchternaam2.setBorder(BorderFactory.createMatteBorder(0, 8, 0, 0, Color.LIGHT_GRAY));
         panelFilter2.add(jtfAchternaam2);
         
         jbZoeken2 = new JButton("Zoeken");
+        jbZoeken2.setForeground(Color.WHITE);
+        jbZoeken2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        jbZoeken2.setBackground(new Color(237, 127, 35));
+        jbZoeken2.setPreferredSize(new Dimension(173, 48));
+        jbZoeken2.setBorder(BorderFactory.createMatteBorder(0, 5, 0, 0, Color.WHITE));
         panelFilter2.add(jbZoeken2);
         jbZoeken2.addActionListener(this);
+        
+        panelFilter2.setBackground(Color.WHITE);
+        panelFilter2.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
         
         add(panelFilter2); // Toevoegen van panel het aan scherm
         // }
         
         // Tabblad 3 {        
-        panelFilter3.add(new JLabel("Zoeken op achternaam:"));
+        JLabel jlZoeken3 = new JLabel("Zoeken op achternaam:");
+        jlZoeken3.setPreferredSize(new Dimension(332, 40));
+        jlZoeken3.setLayout(new FlowLayout(FlowLayout.LEFT));
         
-        jtfAchternaam3 = new JTextField(10);
+        panelFilter3.add(jlZoeken3);
+        
+        jtfAchternaam3 = new JTextField();
+        jtfAchternaam3.setBorder(null);
+        jtfAchternaam3.setBackground(Color.LIGHT_GRAY);
+        jtfAchternaam3.setPreferredSize(new Dimension(174, 48));
+        jtfAchternaam3.setBorder(BorderFactory.createMatteBorder(0, 8, 0, 0, Color.LIGHT_GRAY));
         panelFilter3.add(jtfAchternaam3);
         
         jbZoeken3 = new JButton("Zoeken");
+        jbZoeken3.setForeground(Color.WHITE);
+        jbZoeken3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        jbZoeken3.setBackground(new Color(237, 127, 35));
+        jbZoeken3.setPreferredSize(new Dimension(173, 48));
+        jbZoeken3.setBorder(BorderFactory.createMatteBorder(0, 5, 0, 0, Color.WHITE));
         panelFilter3.add(jbZoeken3);
         jbZoeken3.addActionListener(this);
+        
+        panelFilter3.setBackground(Color.WHITE);
+        panelFilter3.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
         
         add(panelFilter3); // Toevoegen van panel het aan scherm
         // }
@@ -310,7 +370,7 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
             "LEFT JOIN persoon p ON p.persoon_id = t.persoon_id " +
             "WHERE t.actief = 2 ";
         if (ingevoerdeAchternaam3 != "") { // Als het zoekveld voor achternaam niet leeg is gelaten, wordt deze invoer verwerkt in de query: 
-            query2 += "&& p.achternaam LIKE '%" + ingevoerdeAchternaam + "%'";
+            query3 += "&& p.achternaam LIKE '%" + ingevoerdeAchternaam + "%'";
         } 
         // }
         
@@ -326,15 +386,24 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
                 
                 // Elke row bevat een treinkoerier_id, een voornaam, achternaam en detailsbutton
                 String treinkoerier_id = resultSet.getString("treinkoerier_id1");
-                panelOverzichtTreinkoeriers.add(new JLabel(treinkoerier_id)); // Treinkoerier-ID voor deze row toevoegen aan het panel
+                JLabel jlTreinkoerier_id1 = new JLabel(treinkoerier_id);
+                jlTreinkoerier_id1.setFont(font);
+                panelOverzichtTreinkoeriers.add(jlTreinkoerier_id1); // Treinkoerier-ID voor deze row toevoegen aan het panel
                 
                 String voornaam = resultSet.getString("voornaam1");
-                panelOverzichtTreinkoeriers.add(new JLabel(voornaam)); // Voornaam voor deze row toevoegen aan het panel
+                JLabel jlVoornaam = new JLabel(voornaam);
+                jlVoornaam.setFont(font);
+                panelOverzichtTreinkoeriers.add(jlVoornaam); // Voornaam voor deze row toevoegen aan het panel
                 
                 String achternaam = resultSet.getString("achternaam1");
-                panelOverzichtTreinkoeriers.add(new JLabel(achternaam)); // Achternaam voor deze row toevoegen aan het panel
+                JLabel jlAchternaam = new JLabel(achternaam);
+                jlAchternaam.setFont(font);
+                panelOverzichtTreinkoeriers.add(jlAchternaam); // Achternaam voor deze row toevoegen aan het panel
                 
                 jbDetails = new JButton("Details");
+                jbDetails.setForeground(Color.WHITE);
+                jbDetails.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+                jbDetails.setBackground(new Color(237, 127, 35));
                 panelOverzichtTreinkoeriers.add(jbDetails); // Detailsknop voor deze row toevoegen aan het panel
                 jbDetails.addActionListener(this);
 
@@ -361,16 +430,25 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
             while (resultSet2.next()) {
                 
                 // Elke row bevat een treinkoerier_id, een voornaam, achternaam en detailsbutton
-                String treinkoerier_id = resultSet2.getString("treinkoerier_id2");
-                panelOverzichtTreinkoeriers2.add(new JLabel(treinkoerier_id)); // Treinkoerier-ID voor deze row toevoegen aan het panel
+                String treinkoerier_id2 = resultSet2.getString("treinkoerier_id2");
+                JLabel jlTreinkoerier_id2 = new JLabel(treinkoerier_id2);
+                jlTreinkoerier_id2.setFont(font);
+                panelOverzichtTreinkoeriers2.add(jlTreinkoerier_id2); // Treinkoerier-ID voor deze row toevoegen aan het panel
                 
-                String voornaam = resultSet2.getString("voornaam2");
-                panelOverzichtTreinkoeriers2.add(new JLabel(voornaam)); // Voornaam voor deze row toevoegen aan het panel
+                String voornaam2 = resultSet2.getString("voornaam2");
+                JLabel jlVoornaam2 = new JLabel(voornaam2);
+                jlVoornaam2.setFont(font);
+                panelOverzichtTreinkoeriers2.add(jlVoornaam2); // Voornaam voor deze row toevoegen aan het panel
                 
-                String achternaam = resultSet2.getString("achternaam2");
-                panelOverzichtTreinkoeriers2.add(new JLabel(achternaam)); // Achternaam voor deze row toevoegen aan het panel
-                                
+                String achternaam2 = resultSet2.getString("achternaam2");
+                JLabel jlAchternaam2 = new JLabel(achternaam2);
+                jlAchternaam2.setFont(font);
+                panelOverzichtTreinkoeriers2.add(jlAchternaam2); // Achternaam voor deze row toevoegen aan het panel
+                
                 jbDetails2 = new JButton("Details");
+                jbDetails2.setForeground(Color.WHITE);
+                jbDetails2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+                jbDetails2.setBackground(new Color(237, 127, 35));
                 panelOverzichtTreinkoeriers2.add(jbDetails2); // Detailsknop voor deze row toevoegen aan het panel
                 jbDetails2.addActionListener(this); 
                 
@@ -396,18 +474,27 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
             while (resultSet3.next()) {
                 
                 // Elke row bevat een treinkoerier_id, een voornaam, achternaam en detailsbutton
-                String treinkoerier_id = resultSet3.getString("treinkoerier_id3");
-                panelOverzichtTreinkoeriers3.add(new JLabel(treinkoerier_id)); // Treinkoerier-ID voor deze row toevoegen aan het panel
+                String treinkoerier_id3 = resultSet3.getString("treinkoerier_id3");
+                JLabel jlTreinkoerier_id3 = new JLabel(treinkoerier_id3);
+                jlTreinkoerier_id3.setFont(font);
+                panelOverzichtTreinkoeriers3.add(jlTreinkoerier_id3); // Treinkoerier-ID voor deze row toevoegen aan het panel
                 
-                String voornaam = resultSet3.getString("voornaam3");
-                panelOverzichtTreinkoeriers3.add(new JLabel(voornaam)); // Voornaam voor deze row toevoegen aan het panel
+                String voornaam3 = resultSet3.getString("voornaam3");
+                JLabel jlVoornaam3 = new JLabel(voornaam3);
+                jlVoornaam3.setFont(font);
+                panelOverzichtTreinkoeriers3.add(jlVoornaam3); // Voornaam voor deze row toevoegen aan het panel
                 
-                String achternaam = resultSet2.getString("achternaam3");
-                panelOverzichtTreinkoeriers3.add(new JLabel(achternaam)); // Achternaam voor deze row toevoegen aan het panel
-                                
+                String achternaam3 = resultSet3.getString("achternaam3");
+                JLabel jlAchternaam3 = new JLabel(achternaam3);
+                jlAchternaam3.setFont(font);
+                panelOverzichtTreinkoeriers3.add(jlAchternaam3); // Achternaam voor deze row toevoegen aan het panel
+                
                 jbDetails3 = new JButton("Details");
+                jbDetails3.setForeground(Color.WHITE);
+                jbDetails3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+                jbDetails3.setBackground(new Color(237, 127, 35));
                 panelOverzichtTreinkoeriers3.add(jbDetails3); // Detailsknop voor deze row toevoegen aan het panel
-                jbDetails3.addActionListener(this); 
+                jbDetails3.addActionListener(this);
                 
                 rows3++;
                 
@@ -430,17 +517,24 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
             // }
             
             // Tabblad 1 {
-            hightPanelOverzichtKoeriers = (rows * 50 + 50); // Voor elke extra row wordt het panel 50 pixels hoger
+            hightPanelOverzichtKoeriers = (rows * 54 + 50); // Voor elke extra row wordt het panel 50 pixels hoger
             panelOverzichtTreinkoeriers.setPreferredSize(new Dimension(600, hightPanelOverzichtKoeriers));
-
+            int widthScrollPanePanelOverzichtKoeriers;
             if (hightPanelOverzichtKoeriers <= 300) {
+                widthScrollPanePanelOverzichtKoeriers = 680;
                 hightPanePanelOverzichtKoeriers = hightPanelOverzichtKoeriers + 5;
+                panelOverzichtTreinkoeriers.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.WHITE));
             } else {
                 hightPanePanelOverzichtKoeriers = 300;
+                widthScrollPanePanelOverzichtKoeriers = 715;
+                panelOverzichtTreinkoeriers.setBorder(BorderFactory.createMatteBorder(0, 16, 0, 0, Color.WHITE));
             }
+            
             // Setten van de afmeting van de scroll pane waarin het panelOverzichtTreinkoeriers zit
-            scrollPanePanelOverzichtTreinkoeriers.setPreferredSize(new Dimension(680, hightPanePanelOverzichtKoeriers));
-
+            scrollPanePanelOverzichtTreinkoeriers.setPreferredSize(new Dimension(widthScrollPanePanelOverzichtKoeriers, hightPanePanelOverzichtKoeriers));
+            
+            scrollPanePanelOverzichtTreinkoeriers.setBorder(null);
+            
             if (rows != 0) { // Als de query resultaat hebben opgeleverd
                 scrollPanePanelOverzichtTreinkoeriers.getViewport().add(panelOverzichtTreinkoeriers); // panelOverzichtTreinkoeriers toevoegen aan de scroll pane
             } else {
@@ -448,23 +542,31 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
                 geenResultaten.setForeground(Color.RED);
                 panelGeenResultaten.setPreferredSize(new Dimension(600, 40));
                 panelGeenResultaten.add(geenResultaten);
+                panelGeenResultaten.setBackground(Color.WHITE);
                 scrollPanePanelOverzichtTreinkoeriers.getViewport().add(panelGeenResultaten);
             }
+            panelOverzichtTreinkoeriers.setBackground(Color.WHITE);
+            scrollPanePanelOverzichtTreinkoeriers.getVerticalScrollBar().setBackground(Color.WHITE);
             add(scrollPanePanelOverzichtTreinkoeriers); // De scroll pane met daarin het overzicht van de treinkoeriers toevoegen aan het scherm
             // }
             
             // Tabblad 2 {
-            hightPanelOverzichtKoeriers2 = (rows2 * 50 + 50); // Voor elke extra row wordt het panel 50 pixels hoger
+            hightPanelOverzichtKoeriers2 = (rows2 * 54 + 50); // Voor elke extra row wordt het panel 50 pixels hoger
             panelOverzichtTreinkoeriers2.setPreferredSize(new Dimension(600, hightPanelOverzichtKoeriers2));
-            
+            int widthScrollPanePanelOverzichtKoeriers2;
             if (hightPanelOverzichtKoeriers2 <= 300) {
                 hightPanePanelOverzichtKoeriers2 = hightPanelOverzichtKoeriers2 + 5;
+                panelOverzichtTreinkoeriers2.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.WHITE));
             } else {
                 hightPanePanelOverzichtKoeriers2 = 300;
+                widthScrollPanePanelOverzichtKoeriers2 = 715;
+                panelOverzichtTreinkoeriers2.setBorder(BorderFactory.createMatteBorder(0, 16, 0, 0, Color.WHITE));
             }  
   
             // Setten van de afmetingen van de scroll pane waarin het panelOverzichtTreinkoeriers zit
             scrollPanePanelOverzichtTreinkoeriers2.setPreferredSize(new Dimension(680, hightPanePanelOverzichtKoeriers2));
+            
+            scrollPanePanelOverzichtTreinkoeriers2.setBorder(null);
             
             if (rows2 != 0) { // Als de query resultaat hebben opgeleverd
                 scrollPanePanelOverzichtTreinkoeriers2.getViewport().add(panelOverzichtTreinkoeriers2); // panelOverzichtTreinkoeriers toevoegen aan de scroll pane
@@ -473,23 +575,31 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
                 geenResultaten2.setForeground(Color.RED);
                 panelGeenResultaten2.setPreferredSize(new Dimension(600, 40));
                 panelGeenResultaten2.add(geenResultaten2);
+                panelGeenResultaten2.setBackground(Color.WHITE);
                 scrollPanePanelOverzichtTreinkoeriers2.getViewport().add(panelGeenResultaten2);
             }
+            panelOverzichtTreinkoeriers2.setBackground(Color.WHITE);
+            scrollPanePanelOverzichtTreinkoeriers2.getVerticalScrollBar().setBackground(Color.WHITE);
             add(scrollPanePanelOverzichtTreinkoeriers2); // De scroll pane met daarin het overzicht van de treinkoeriers toevoegen aan het scherm
             // }  
             
             // Tabblad 3 {
-            hightPanelOverzichtKoeriers3 = (rows3 * 50 + 50); // Voor elke extra row wordt het panel 50 pixels hoger
+            hightPanelOverzichtKoeriers3 = (rows3 * 54 + 50); // Voor elke extra row wordt het panel 50 pixels hoger
             panelOverzichtTreinkoeriers3.setPreferredSize(new Dimension(600, hightPanelOverzichtKoeriers3));
-            
+            int widthScrollPanePanelOverzichtKoeriers3;
             if (hightPanelOverzichtKoeriers3 <= 300) {
                 hightPanePanelOverzichtKoeriers3 = hightPanelOverzichtKoeriers3 + 5;
+                panelOverzichtTreinkoeriers3.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 0, Color.WHITE));
             } else {
                 hightPanePanelOverzichtKoeriers3 = 300;
+                widthScrollPanePanelOverzichtKoeriers3 = 715;
+                panelOverzichtTreinkoeriers3.setBorder(BorderFactory.createMatteBorder(0, 16, 0, 0, Color.WHITE));
             }  
   
             // Setten van de afmetingen van de scroll pane waarin het panelOverzichtTreinkoeriers zit
-            scrollPanePanelOverzichtTreinkoeriers3.setPreferredSize(new Dimension(680, hightPanePanelOverzichtKoeriers2));
+            scrollPanePanelOverzichtTreinkoeriers3.setPreferredSize(new Dimension(680, hightPanePanelOverzichtKoeriers3));
+            
+            scrollPanePanelOverzichtTreinkoeriers3.setBorder(null);
             
             if (rows3 != 0) { // Als de query resultaat hebben opgeleverd
                 scrollPanePanelOverzichtTreinkoeriers3.getViewport().add(panelOverzichtTreinkoeriers3); // panelOverzichtTreinkoeriers toevoegen aan de scroll pane
@@ -498,8 +608,11 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
                 geenResultaten3.setForeground(Color.RED);
                 panelGeenResultaten3.setPreferredSize(new Dimension(600, 40));
                 panelGeenResultaten3.add(geenResultaten3);
+                panelGeenResultaten3.setBackground(Color.WHITE);
                 scrollPanePanelOverzichtTreinkoeriers3.getViewport().add(panelGeenResultaten3);
             }
+            panelOverzichtTreinkoeriers3.setBackground(Color.WHITE);
+            scrollPanePanelOverzichtTreinkoeriers3.getVerticalScrollBar().setBackground(Color.WHITE);
             add(scrollPanePanelOverzichtTreinkoeriers3); // De scroll pane met daarin het overzicht van de treinkoeriers toevoegen aan het scherm
             // } 
             
@@ -511,24 +624,45 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
         // panelButtons {
         // Tabblad 1 {
         jbTerug = new JButton("Terug naar Beginscherm");
+        jbTerug.setForeground(Color.WHITE);
+        jbTerug.setBorder(null);
+        jbTerug.setBackground(new Color(237, 127, 35));
+        jbTerug.setPreferredSize(new Dimension(200, 48));
         panelButtons.add(jbTerug);
         jbTerug.addActionListener(this);
+        
+        panelButtons.setBackground(Color.WHITE);
+        panelButtons.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.LIGHT_GRAY));
         
         add(panelButtons); // Toevoegen van panel het aan scherm
         // }
         
         // Tabblad 2 {
         jbTerug2 = new JButton("Terug naar Beginscherm");
+        jbTerug2.setForeground(Color.WHITE);
+        jbTerug2.setBorder(null);
+        jbTerug2.setBackground(new Color(237, 127, 35));
+        jbTerug2.setPreferredSize(new Dimension(200, 48));
         panelButtons2.add(jbTerug2);
         jbTerug2.addActionListener(this);
+        
+        panelButtons2.setBackground(Color.WHITE);
+        panelButtons2.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.LIGHT_GRAY));
         
         add(panelButtons2); // Toevoegen van panel het aan scherm
         // }
         
         // Tabblad 3 {
         jbTerug3 = new JButton("Terug naar Beginscherm");
+        jbTerug3.setForeground(Color.WHITE);
+        jbTerug3.setBorder(null);
+        jbTerug3.setBackground(new Color(237, 127, 35));
+        jbTerug3.setPreferredSize(new Dimension(200, 48));
         panelButtons3.add(jbTerug3);
         jbTerug3.addActionListener(this);
+        
+        panelButtons3.setBackground(Color.WHITE);
+        panelButtons3.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.LIGHT_GRAY));
         
         add(panelButtons2); // Toevoegen van panel het aan scherm
         // }
@@ -536,30 +670,33 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
         
         // De containers die per container alles bevatten wat op één tabblad staat {
         // Tabblad 1 {
-        JPanel container = new JPanel();
+        JPanel container = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         container.setPreferredSize(new Dimension(722, 605));
         container.add(panelTitel);
         container.add(panelFilter);
         container.add(scrollPanePanelOverzichtTreinkoeriers);
         container.add(panelButtons);
+        container.setBackground(Color.WHITE);
         // }
         
         // Tabblad 2 {        
-        JPanel container2 = new JPanel();
+        JPanel container2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         container2.setPreferredSize(new Dimension(722, 605));
         container2.add(panelTitel2);
         container2.add(panelFilter2);
         container2.add(scrollPanePanelOverzichtTreinkoeriers2);
         container2.add(panelButtons2);
+        container2.setBackground(Color.WHITE);
         // }
         
         // Tabblad 3 {        
-        JPanel container3 = new JPanel();
+        JPanel container3 = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         container3.setPreferredSize(new Dimension(722, 605));
         container3.add(panelTitel3);
         container3.add(panelFilter3);
         container3.add(scrollPanePanelOverzichtTreinkoeriers3);
         container3.add(panelButtons3);
+        container3.setBackground(Color.WHITE);
         // }
         // } Einde containers
         
@@ -582,12 +719,16 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
             if (jtfAchternaam.getText().length() != 0) { // Als het zoekveld niet leeg is
                 
                 setIngevoerdeAchternaam(jtfAchternaam.getText());
+                setIngevoerdeAchternaam2(jtfAchternaam.getText());
+                setIngevoerdeAchternaam3(jtfAchternaam.getText());
                 
                 SchermOverzichtTreinkoeriers sot = new SchermOverzichtTreinkoeriers(ingevoerdeAchternaam);
                 sot.jtfAchternaam.setText(jtfAchternaam.getText());
                 sot.jtfAchternaam2.setText(jtfAchternaam.getText());
+                sot.jtfAchternaam3.setText(jtfAchternaam.getText());
                 sot.setIngevoerdeAchternaam(ingevoerdeAchternaam);
                 sot.setIngevoerdeAchternaam2(ingevoerdeAchternaam);
+                sot.setIngevoerdeAchternaam3(ingevoerdeAchternaam);
                 
                 sot.tabblad.setSelectedIndex(tabblad.getSelectedIndex());
                 
@@ -644,10 +785,11 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
                     String telefoon = resultSet.getString("telefoon");
                     String bsn = resultSet.getString("bsn");
                     String documentnummer = resultSet.getString("documentnr");
+                    int actief = resultSet.getInt("actief");
                        
                     // Aanmaken nieuw koerierobject
                     Koerier koerier = new Koerier(treinkoerier_id, voornaam, achternaam, geslacht, geboortedatum, straat, huisnummer, 
-                    postcode, plaats, email, telefoon, bsn, documentnummer, "Hash");
+                    postcode, plaats, email, telefoon, bsn, documentnummer, "Hash", actief);
                     
                     // Maak nieuw scherm met de gegevens van de zojuist aangemaakte koerier
                     SchermGegevensTreinkoerier sgt = new SchermGegevensTreinkoerier(koerier);
@@ -673,20 +815,24 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
             dispose(); 
             
         }
-        // }
+        // } Einde action performed tabblad 1
         
         // Action performed voor tabblad 2
         if (e.getSource() == jbZoeken2) {
             
             if (jtfAchternaam2.getText().length() != 0) {
                 
+                setIngevoerdeAchternaam(jtfAchternaam2.getText());
                 setIngevoerdeAchternaam2(jtfAchternaam2.getText());
+                setIngevoerdeAchternaam3(jtfAchternaam2.getText());
                 
                 SchermOverzichtTreinkoeriers sot = new SchermOverzichtTreinkoeriers(ingevoerdeAchternaam2);
-                sot.jtfAchternaam2.setText(jtfAchternaam2.getText());
                 sot.jtfAchternaam.setText(jtfAchternaam2.getText());
-                sot.setIngevoerdeAchternaam2(ingevoerdeAchternaam2);
+                sot.jtfAchternaam2.setText(jtfAchternaam2.getText());
+                sot.jtfAchternaam3.setText(jtfAchternaam2.getText());
                 sot.setIngevoerdeAchternaam(ingevoerdeAchternaam2);
+                sot.setIngevoerdeAchternaam2(ingevoerdeAchternaam2);
+                sot.setIngevoerdeAchternaam3(ingevoerdeAchternaam2);
                 
                 sot.tabblad.setSelectedIndex(tabblad.getSelectedIndex());
                 
@@ -768,19 +914,31 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
             i2++;
         } 
         
+        if (e.getSource() == jbTerug) { // Als de terugknop wordt aangeklikt
+            
+            SchermHome scherm = new SchermHome();
+            dispose(); 
+            
+        }
+        // } Einde action performed tabblad 2
+        
         // Action performed voor tabblad 3
         if (e.getSource() == jbZoeken3) {
             
             if (jtfAchternaam3.getText().length() != 0) {
                 
+                setIngevoerdeAchternaam(jtfAchternaam3.getText());
                 setIngevoerdeAchternaam2(jtfAchternaam3.getText());
+                setIngevoerdeAchternaam3(jtfAchternaam3.getText());
                 
                 SchermOverzichtTreinkoeriers sot = new SchermOverzichtTreinkoeriers(ingevoerdeAchternaam3);
-                sot.jtfAchternaam3.setText(jtfAchternaam3.getText());
                 sot.jtfAchternaam.setText(jtfAchternaam3.getText());
-                sot.setIngevoerdeAchternaam3(ingevoerdeAchternaam3);
+                sot.jtfAchternaam2.setText(jtfAchternaam3.getText());
+                sot.jtfAchternaam3.setText(jtfAchternaam3.getText());
                 sot.setIngevoerdeAchternaam(ingevoerdeAchternaam3);
-                
+                sot.setIngevoerdeAchternaam2(ingevoerdeAchternaam3);
+                sot.setIngevoerdeAchternaam3(ingevoerdeAchternaam3);
+
                 sot.tabblad.setSelectedIndex(tabblad.getSelectedIndex());
                 
                 dispose();
@@ -795,9 +953,9 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
         }
         
         int i3 = 0;
-        while (i3 < detailsButtons2.size()) { 
+        while (i3 < detailsButtons3.size()) { 
         
-            if (e.getSource() == detailsButtons2.get(i2)) {
+            if (e.getSource() == detailsButtons3.get(i3)) {
                 
                 // Verbinden met database {
                 Connection connection = null;
@@ -808,35 +966,35 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
                 }
                 // }
                 
-                treinkoerier_ids2.get(i2); /* De detailsknop waarop gedrukt wordt, heeft dezelfde plaats (index)
+                treinkoerier_ids3.get(i3); /* De detailsknop waarop gedrukt wordt, heeft dezelfde plaats (index)
                 in de detailsButtonsarraylist, als de bijbehorende treinkoerier_id heeft in 
                 de treinkoerier_ids-arraylist */
                 
                 // Ophalen gegevens uit database
                 try {
                     
-                    Statement statement2 = connection.createStatement();
-                    ResultSet resultSet2 = statement2.executeQuery(
+                    Statement statement3 = connection.createStatement();
+                    ResultSet resultSet3 = statement3.executeQuery(
                         "SELECT * " + 
                         "FROM treinkoerier t " +
                         "LEFT JOIN persoon p ON p.persoon_id = t.persoon_id " +
-                        "WHERE t.treinkoerier_id = '" + treinkoerier_ids2.get(i2) + "'");
+                        "WHERE t.treinkoerier_id = '" + treinkoerier_ids3.get(i3) + "'");
 
-                    resultSet2.next();
+                    resultSet3.next();
                     
-                    String treinkoerier_id = resultSet2.getString("treinkoerier_id"); 
-                    String voornaam = resultSet2.getString("voornaam");
-                    String achternaam = resultSet2.getString("achternaam");
-                    String geslacht = resultSet2.getString("geslacht");
-                    String geboortedatum = resultSet2.getString("gebdatum"); // Later naar kijken
-                    String straat = resultSet2.getString("straat");
-                    String huisnummer = resultSet2.getString("huisnr");
-                    String postcode = resultSet2.getString("postcode");
-                    String plaats = resultSet2.getString("plaats");
-                    String email = resultSet2.getString("email");
-                    String telefoon = resultSet2.getString("telefoon");
-                    String bsn = resultSet2.getString("bsn");
-                    String documentnummer = resultSet2.getString("documentnr");
+                    String treinkoerier_id = resultSet3.getString("treinkoerier_id"); 
+                    String voornaam = resultSet3.getString("voornaam");
+                    String achternaam = resultSet3.getString("achternaam");
+                    String geslacht = resultSet3.getString("geslacht");
+                    String geboortedatum = resultSet3.getString("gebdatum"); // Later naar kijken
+                    String straat = resultSet3.getString("straat");
+                    String huisnummer = resultSet3.getString("huisnr");
+                    String postcode = resultSet3.getString("postcode");
+                    String plaats = resultSet3.getString("plaats");
+                    String email = resultSet3.getString("email");
+                    String telefoon = resultSet3.getString("telefoon");
+                    String bsn = resultSet3.getString("bsn");
+                    String documentnummer = resultSet3.getString("documentnr");
                        
                     // Aanmaken nieuw koerierobject
                     Koerier koerier = new Koerier(treinkoerier_id, voornaam, achternaam, geslacht, geboortedatum, straat, huisnummer, 
@@ -847,7 +1005,7 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
                     sgt.setTab(tabblad.getSelectedIndex()); 
                     
                     // Databaseverbinding beëindigen
-                    statement2.close();
+                    statement3.close();
                     connection.close();
                     
                     dispose(); // Sluit het huidige scherm
@@ -858,15 +1016,16 @@ public class SchermOverzichtTreinkoeriers extends JFrame implements ActionListen
                 
             }
             
-            i2++;
+            i3++;
         } 
         
-        if (e.getSource() == jbTerug2) { // Als de terugknop wordt aangeklikt
+        if (e.getSource() == jbTerug3) { // Als de terugknop wordt aangeklikt
             
             SchermHome scherm = new SchermHome();
             dispose(); 
             
         }
+        // Einde action performed tabblad 3
 
     }
 

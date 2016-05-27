@@ -22,7 +22,7 @@ public class Koerier extends Persoon {
     private String documentnummer;
     private String password;
     private String salt;
-    private boolean actief; /* Wanneer op de waarde "false" is, 
+    private int actief; /* Wanneer op de waarde "false" is, 
     heeft de treinkoerier geen toegang tot zijn/haar account. */ 
     // }
     
@@ -177,11 +177,11 @@ public class Koerier extends Persoon {
         this.salt = salt;
     }
     
-    public boolean isActief() {
+    public int getActief() {
         return actief;
     }
     
-    public void setActief(boolean actief) {
+    public void setActief(int actief) {
         this.actief = actief;
     }
     // }
@@ -197,7 +197,7 @@ public class Koerier extends Persoon {
     
     // Methodes {
     public String printIsActief() {
-        if (isActief() == true) {
+        if (getActief() == 1) {
             return ("Ja");
         } else {
             return ("Nee");
@@ -226,7 +226,22 @@ public class Koerier extends Persoon {
         setDocumentnummer(documentnummer);
         setPassword(password);
         setSalt(""); // Wat is hier het plan?
-        setActief(false); /* De ingevoerde informatie zal door een medewerker goedgekeurd moeten worden, 
+        setActief(0); /* De ingevoerde informatie zal door een medewerker goedgekeurd moeten worden, 
+            deze zal het account vervolgens op actief zetten */
+        isTreinkoerier = true; // De koerier is een treinkoerier
+        
+    }
+    
+    // Constructor treinkoerier
+    public Koerier(String treinkoerier_id, String voornaam, String achternaam, String geslacht, 
+    String geboortedatum, String straat, String huisnummer, String postcode, 
+    String plaats, String email, String telefoon, String bsn, String documentnummer,
+    String password, int actief) { // "geboortedatum" Moet een Date worden i.p.v. een String
+        
+        this(treinkoerier_id, voornaam, achternaam, geslacht, geboortedatum, straat, huisnummer, 
+            postcode, plaats, email, telefoon, bsn, documentnummer, password);
+        setSalt(""); // Wat is hier het plan?
+        setActief(actief); /* De ingevoerde informatie zal door een medewerker goedgekeurd moeten worden, 
             deze zal het account vervolgens op actief zetten */
         isTreinkoerier = true; // De koerier is een treinkoerier
         
