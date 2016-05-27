@@ -3,11 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Dennie/Documents/NetBeansProjects/tzt-backend/src/backofficeapplicatie_TZT/SchermGegevensTreinkoerier.java</file>
-            <file>file:/C:/Users/Dennie/Documents/NetBeansProjects/tzt-backend/src/backofficeapplicatie_TZT/Databaseverbinding.java</file>
-            <file>file:/C:/Users/Dennie/Documents/NetBeansProjects/tzt-backend/src/backofficeapplicatie_TZT/Koerier.java</file>
-            <file>file:/C:/Users/Dennie/Documents/NetBeansProjects/tzt-backend/src/backofficeapplicatie_TZT/Valideer.java</file>
-            <file>file:/C:/Users/Dennie/Documents/NetBeansProjects/tzt-backend/src/backofficeapplicatie_TZT/Main.java</file>
+            <file>file:/C:/Users/rickh_000/Documents/GitHub/backofficeapplicatie_TZT/src/backofficeapplicatie_TZT/Klant.java</file>
+            <file>file:/C:/Users/rickh_000/Documents/GitHub/backofficeapplicatie_TZT/src/backofficeapplicatie_TZT/SchermHome.java</file>
+            <file>file:/C:/Users/rickh_000/Documents/GitHub/backofficeapplicatie_TZT/src/backofficeapplicatie_TZT/Main.java</file>
+            <file>file:/C:/Users/rickh_000/Documents/GitHub/backofficeapplicatie_TZT/src/backofficeapplicatie_TZT/Koerier.java</file>
+            <file>file:/C:/Users/rickh_000/Documents/GitHub/backofficeapplicatie_TZT/src/backofficeapplicatie_TZT/Persoon.java</file>
+            <file>file:/C:/Users/rickh_000/Documents/GitHub/backofficeapplicatie_TZT/src/backofficeapplicatie_TZT/SchermOverzichtTreinkoeriers.java</file>
+            <file>file:/C:/Users/rickh_000/Documents/GitHub/backofficeapplicatie_TZT/src/backofficeapplicatie_TZT/SchermGegevensTreinkoerier.java</file>
+            <file>file:/C:/Users/rickh_000/Documents/GitHub/backofficeapplicatie_TZT/src/backofficeapplicatie_TZT/Valideer.java</file>
+            <file>file:/C:/Users/rickh_000/Documents/GitHub/backofficeapplicatie_TZT/src/backofficeapplicatie_TZT/Databaseverbinding.java</file>
         </group>
     </open-files>
 </project-private>
